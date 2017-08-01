@@ -1,13 +1,22 @@
-goin-cli getaddressesbyaccount “”: what’s the last input, the string, stands for
-a block of tx is confirmed after 6 blocks, what if a orphan block is linked more than 6 by a attacker
-In page 65, we can get a private key by typing followings :
-    $ bitcoind getnewaddress
-	XXX
-    $ bitcoind dumpprivkey XXX
-	privkey
-    does it means there is a privkey follows every address?
+General Problems:
+    goin-cli getaddressesbyaccount “”: what’s the last input, the string, stands for
+    a block of tx is confirmed after 6 blocks, what if a orphan block is linked more than 6 by a attacker
+    In page 65, we can get a private key by typing followings :
+	$ bitcoind getnewaddress
+	    XXX
+	$ bitcoind dumpprivkey XXX
+	    privkey
+	does it means there is a privkey follows every address?
+    accidentally unsing the same address prevented?
+    Re-use the address is not recommanded. Used address is throw away after transaction?
+Problems To Ask From PPT :
+    two layer design (page 18)
+    (page 26)
+    try to deduce the balance (page 40)
+    (page 50)
 
 some notes:
+    The first paper released: A peer-to-peer electronic Cash system
     new block mined every 10 mins
     The protocol halve the rate of mining every 4 years
     maximum of 21 million by 2140
@@ -15,6 +24,31 @@ some notes:
     The transaction fee is 0.0005 (which is implied by the difference in input and output)
     every transaction is 256 bit
     wallet works offline as well
+    BIP = bitcoin improvement proposals
+
+Misconceptions:
+    wait for 10 min for new block or wait for 60 min for full six confirmation
+	actually a small transaction need no confirmations 
+
+problems of money:
+    authentic or not
+    double-spend problem
+
+
+Common transaction forms:
+    common transaction(pay and change)
+    aggregate transaction(wallet)
+    Distributed transaction(salary) 
+
+Fork: Both result from the change in protocol
+    Soft fork:  old miners can recognize new block without updating
+    Hard fork:	all the nodes should be updated to recognize the new rules
+
+Payload:
+    add a version byte to identify the type of date
+    double sha256 hash
+    take first 4 bytes as checksum appending to the string
+    encode {prefix, data, checksumm} using base58
 
 Keys & Address :
     private key
@@ -41,34 +75,31 @@ Keys:
     Private key: a randomly picked number from 1 and 2**256
     (actually 1.158 * 10**77 - 1, which is slightly smaller than 2**256, from elliptic curve)
 
-
-Payload:
-    add a version byte to identify the type of date
-    double sha256 hash
-    take first 4 bytes as checksum appending to the string
-    encode {prefix, data, checksumm} using base58
-
-Misconception:
-    wait for 10 min for new block or wait for 60 min for full six confirmation
-	actually a small transaction need no confirmations 
-
-problems of money:
-    authentic or not
-    double-spend problem
-
-The first paper released: A peer-to-peer electronic Cash system
-
-Common transaction form:
-    common transaction(pay and change)
-    aggregate transaction(wallet)
-    Distributed transaction(salary) 
-
-Problems To Ask From PPT :
-    two layer design (page 18)
-    (page 26)
-    try to deduce the balance (page 40)
-    (page 50)
-
-Fork: Both result from the change in protocol
-    Soft fork:  old miners can recognize new block without updating
-    Hard fork:	all the nodes should be updated to recognize the new rules
+Wallets:
+    Deterministic Wallet: 
+	storing only the seed(master key)
+	derive privkey from prievious privkey when needed
+	easy migration   
+	Hierarchical Deterministic(HD) Wallets(BIP0032/0044)
+	    Private Key(256)
+	    Chain Code(256): Random numbers to prevent keys of children from deduced
+	    Index Number:
+		numbering of children generated
+		normal derivations [0~2**31)
+		hardened deriavations [2**31~2**32)
+		hardened version also simplified as [originNum-2**31]'
+		path system similar to file system 
+		    privkey m
+		    pubkey M
+		    ex: m/14/3/4
+	    extended key: 
+		combination of Private/Public key and chain code 
+		(encoded by base58 with xprv/xpub prefix)
+	    Harden child key derivation
+		original pubkey will expose whole tree to danger if any privkey leaked
+		change the way to derive chilren keys in shown in page 95
+    Non-deterministic(Random) Wallet: 
+	Just a Bunch Of Keys(not recommanded and replace by above)
+    Mnemonic:
+	defined in BIP0039
+	using words to to create long seed in Deterministic Wallet 
