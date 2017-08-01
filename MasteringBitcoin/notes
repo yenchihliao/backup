@@ -1,0 +1,74 @@
+goin-cli getaddressesbyaccount “”: what’s the last input, the string, stands for
+a block of tx is confirmed after 6 blocks, what if a orphan block is linked more than 6 by a attacker
+In page 65, we can get a private key by typing followings :
+    $ bitcoind getnewaddress
+	XXX
+    $ bitcoind dumpprivkey XXX
+	privkey
+    does it means there is a privkey follows every address?
+
+some notes:
+    new block mined every 10 mins
+    The protocol halve the rate of mining every 4 years
+    maximum of 21 million by 2140
+    6 confirmation is consider irrevocable
+    The transaction fee is 0.0005 (which is implied by the difference in input and output)
+    every transaction is 256 bit
+    wallet works offline as well
+
+Keys & Address :
+    private key
+	HEX
+	WIF58(start with 5):
+	    encoded from original privkey by base58
+	WIF58--compressed: 
+	    encoded from original privkey+'01' by base58
+	    this produces only compressed public key (start with K or L) 
+	(WIF compressed just add a 01 suffix after WIF before encoding)
+	(new wallets stores only WIF-Compressed and vice versa)
+    public keys(encoded from privkey by elliptic curve))
+	compressed
+	uncompressed
+	(keys above with produced different bitcoin address even when they denotes same point on elliptic curve)
+    Address(encoded from pubkey by SHA256 then RIPMXX160 )
+	Public Key == SHA256 == RIPEMD160 ==>
+	Public Key Hash == Bse58Check Encode with prefix that indecate the type ==>
+	Bitcoin address
+	(notice: Address = RIPEMD(SHA(PubKey)) , EndcodedPayload = SHA(SHA(SHAPayload)) )
+Keys:
+    Private Key ==Elliptic_Curve_Multiplication==> Public Key ==Hashing func.==>Bitcoin Address
+    all one way, which is irreversable
+    Private key: a randomly picked number from 1 and 2**256
+    (actually 1.158 * 10**77 - 1, which is slightly smaller than 2**256, from elliptic curve)
+
+
+Payload:
+    add a version byte to identify the type of date
+    double sha256 hash
+    take first 4 bytes as checksum appending to the string
+    encode {prefix, data, checksumm} using base58
+
+Misconception:
+    wait for 10 min for new block or wait for 60 min for full six confirmation
+	actually a small transaction need no confirmations 
+
+problems of money:
+    authentic or not
+    double-spend problem
+
+The first paper released: A peer-to-peer electronic Cash system
+
+Common transaction form:
+    common transaction(pay and change)
+    aggregate transaction(wallet)
+    Distributed transaction(salary) 
+
+Problems To Ask From PPT :
+    two layer design (page 18)
+    (page 26)
+    try to deduce the balance (page 40)
+    (page 50)
+
+Fork: Both result from the change in protocol
+    Soft fork:  old miners can recognize new block without updating
+    Hard fork:	all the nodes should be updated to recognize the new rules
