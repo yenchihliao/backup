@@ -43,6 +43,9 @@ Common transaction forms:
 Fork: Both result from the change in protocol
     Soft fork:  old miners can recognize new block without updating
     Hard fork:	all the nodes should be updated to recognize the new rules
+    5th fork on bitcoin: 
+	1. sig-wit and unlimit fighting
+	2. sig-wit hardfork and the rest 10% in China runs Bitcoin Cash
 
 Payload:
     add a version byte to identify the type of date
@@ -69,11 +72,18 @@ Keys & Address :
 	Public Key Hash == Bse58Check Encode with prefix that indecate the type ==>
 	Bitcoin address
 	(notice: Address = RIPEMD(SHA(PubKey)) , EndcodedPayload = SHA(SHA(SHAPayload)) )
-Keys:
-    Private Key ==Elliptic_Curve_Multiplication==> Public Key ==Hashing func.==>Bitcoin Address
-    all one way, which is irreversable
-    Private key: a randomly picked number from 1 and 2**256
-    (actually 1.158 * 10**77 - 1, which is slightly smaller than 2**256, from elliptic curve)
+    P2SH(Pay to Script Hash):
+	beneficiary become a hash of scipt instead of an address
+	usually use a multi-sig but not necessary
+    Vanity Address:
+	bitcoin address which contains human-readable message(at the begining of address)
+	vanity miner exist for mining such an address
+	attcker use this tech. to generate similar addr to replace original addr.
+    Keys summary:
+	Private Key ==Elliptic_Curve_Multiplication==> Public Key ==Hashing func.==>Bitcoin Address
+	all one way, which is irreversable
+	Private key: a randomly picked number from 1 and 2**256
+	(actually 1.158 * 10**77 - 1, which is slightly smaller than 2**256, from elliptic curve)
 
 Wallets:
     Deterministic Wallet: 
@@ -103,3 +113,8 @@ Wallets:
     Mnemonic:
 	defined in BIP0039
 	using words to to create long seed in Deterministic Wallet 
+    Paper wallet:
+	store privkey(mostly alone with address) on "paper"
+	some privkey are sotred as encrypted form(BIP0038)
+
+
