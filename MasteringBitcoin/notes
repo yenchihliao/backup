@@ -117,4 +117,37 @@ Wallets:
 	store privkey(mostly alone with address) on "paper"
 	some privkey are sotred as encrypted form(BIP0038)
 
+Propagating:
+    steps:
+	tx creation(origination)
+	signed
+	braoadcast
+	verified by miner and include in blockchain
+    300~400 byte per tx
+    propagate to 3 or 4 peers when validated
+
+ Transections:
+    tx structure in page 113
+    tx output structure in page 116
+    tx input structure in page 119
+    Locktime in tx structure: 
+	specifying the earlist time the tx can be add to blockchain
+	default value is 0(exec directly)
+	> 500 milliion: Unix Epoch timestamp
+	<	      : block Height
+    UTXO(unspent transaction output):
+	instead of using accounts, locked(encumberance) UTXO specifies user's balance by scannig through 
+	satoshi as smallest unit(eight decimal place)
+	act as both tx input and output
+	UTXO set(pool) tracked by every full node
+    coinbase tx: the reward for winning miner, which is the exception of txIO
+    fee required
+
+
+
+
+
+
+
+
 
