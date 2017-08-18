@@ -35,11 +35,6 @@ problems of money:
     double-spend problem
 
 
-Common transaction forms:
-    common transaction(pay and change)
-    aggregate transaction(wallet)
-    Distributed transaction(salary) 
-
 Fork: Both result from the change in protocol
     Soft fork:  old miners can recognize new block without updating
     Hard fork:	all the nodes should be updated to recognize the new rules
@@ -127,6 +122,10 @@ Propagating:
     propagate to 3 or 4 peers when validated
 
  Transections:
+    Common Forms:
+	common transaction(pay and change)
+	aggregate transaction(wallet)
+	Distributed transaction(salary) 
     tx structure in page 113
     tx output structure in page 116
     tx input structure in page 119
@@ -141,11 +140,36 @@ Propagating:
 	act as both tx input and output
 	UTXO set(pool) tracked by every full node
     coinbase tx: the reward for winning miner, which is the exception of txIO
-    fee required
-
-
-
-
+    Fee: implied by txIO difference instead of stored directly
+    TX Chain and Orphan Tx:
+	txIOs forms a long list
+	Orphan appears when children arrive faster then parents
+	Orphan tx is collected in pool until parents arrive or be evicted randomly resulting from excessive orphan
+    TX Script(confusingly Script)(stack based)
+	including locking script and unlocking script
+	script enables infinite conditions instead of limited tx patterns
+	when varifying UTXO:
+	    exec. unlocking script 
+	    copy the result of stack
+	    exec. locking script
+	    unlock if TRUE and vice versa
+	Turing Incompleteness(page 127)
+	    no loops or complex flow control included
+	    prevents logic bombs which may result in DDoS attack
+	Stateless Verification: predicable outcome in diff. mechine
+    Standard TX(the tx most miners accept)
+	Pay to Public Key Hash(P2PKH): most common used
+	Pay to Public Key(P2PK)	     : older and more space-consuming than previous one
+	Multi Signature		     : M-of-N scheme defined by user, N is limited
+	Data Output(OP_RETURN)	     : 40 byte free space without UTXO burden. Has no unlocking sript(unspenable)
+	Pay to Script Hash(P2SH)
+	    shorten the locking script in Multi-Sig by hashing it
+	    pros.
+		 easy to implement
+		 shift burden of constructing script(fee and storage also influenced) from sender to recipient
+		 UTXO storage saved, complex sig only store on blockchain
+	    cons. 
+		TX is always considered valid and accepted. People will not able to use those money if it's actually invalid
 
 
 
