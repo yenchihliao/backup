@@ -1,0 +1,4 @@
+sceneSetups:
+- path: Assets/TinyTerrain/Scenes/Island/Island.unity
+  isLoaded: 1
+  isActive: 1

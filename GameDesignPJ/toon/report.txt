@@ -1,0 +1,4 @@
+1. 有使用Standard Shader
+2. 有套用Toon shader的效果並與Standard比對
+3. UV_offset 成功隨時間變化
+4. 未完成Foreground mask wipe
